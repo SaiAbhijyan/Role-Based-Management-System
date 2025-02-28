@@ -1,0 +1,81 @@
+user creation process:
+    Hr adds emp details , should not assign user name password or role.
+    Admin will do user registration and role assignment
+
+
+Basic Employee Information:
+
+
+What specific employee details do you want to store? (e.g., name, employee ID, department, job title, hire date)
+====> Emp First_name, Emp Last_name, Emp_id, Department , job title, hire date,
+ 
+Department Information:
+
+Do you need to track department-specific information? If so, what details should be included for each department? (e.g., department ID, department name, manager)
+Payroll Details:
+
+What payroll-related information should be recorded? (e.g., salary, tax deductions, bonuses, payroll frequency)
+Access Control:
+
+How will access control be managed? Will there be different levels of access depending on the role within the company? (e.g., HR, manager, regular employee)
+Authentication:
+
+What authentication details need to be stored for the web application? (e.g., usernames, passwords, role IDs)
+Security:
+
+What security measures should be implemented for sensitive data? (e.g., data encryption for passwords)
+Audit and Compliance:
+
+Do you require an audit trail for changes made within the system? What specific events should be logged?
+Reporting and Analytics:
+
+What types of reports will you need to generate from this database? (e.g., payroll reports, departmental reports)
+Integration with Other Systems:
+
+Will this database need to integrate with other systems? If so, which systems and how should the integration work?
+Scalability and Performance:
+
+What are your expectations regarding database performance and scalability?
+Data Retention and Archiving:
+
+How long do you need to retain the data, and are there any specific requirements for data archiving?
+
+
+
+1)What is the need for state id in state tax table : remove state_id state name is more than enough,
+2)what is the need for access_level and explain that table with example on how that helps in terms of login and having different scenarios
+3)In audit table there could be many values that get changed for an employee how could you access all the values here only old value and new value is present.
+
+
+
+
+
+
+
+
+
+=========================================================================>
+
+Previous version notes:
+DEBUG: Login Successful | User: admin | Role: Admin | Requested Dashboard: Employee
+The dashboard you choose: Employee
+
+    requested = session['requested_dashboard']
+    user_role = session['role']  # Example: "Manager"
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Select Dashboard</title>
+</head>
+<body>
+    <h1>Select Dashboard</h1>
+    <p>Please choose the dashboard you want to access:</p>
+    <ul>
+        <li><a href="{{ url_for('choose_dashboard', dashboard='Employee') }}">Personal Dashboard</a></li>
+        <li><a href="{{ url_for('choose_dashboard', dashboard='Manager') }}">Manager Dashboard</a></li>
+        <li><a href="{{ url_for('choose_dashboard', dashboard='Admin') }}">Admin Dashboard</a></li>
+    </ul>
+</body>
+</html>

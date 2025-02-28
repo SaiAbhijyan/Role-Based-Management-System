@@ -1,0 +1,67 @@
+1) what if an employee left the company and rehired for same role and department then there would be two records of them with different emp id , is this a good scenario to tackle? 
+
+2) For payroll tax deductions we will have a tax_deductions table with fields: state, tax percentage, with that we can caluculate tax like this : 
+ SELECT E_id,
+            CASE
+                WHEN salary BETWEEN 0 AND 11600 THEN (salary * 0.10)
+                WHEN salary BETWEEN 11601 AND 47150 THEN (salary * 0.12)
+                WHEN salary BETWEEN 47151 AND 100525 THEN (salary * 0.22)
+                WHEN salary BETWEEN 100526 AND 191950 THEN (salary * 0.24)
+                WHEN salary BETWEEN 191951 AND 243725 THEN (salary * 0.32)
+                WHEN salary BETWEEN 243726 AND 609350 THEN (salary * 0.35)
+                WHEN salary > 609351  THEN (salary * 0.37)
+            END AS Federal_deducation
+        FROM payroll.employee
+    )
+    SELECT e.E_id, e.E_name, e.Designation, d.dep_name, e.Salary AS Gross_salary, 
+           (Federal_deducation + (e.salary * td.state_tax / 100) + (e.salary * 0.0765)) AS Deductable,
+           (e.salary - ((Federal_deducation + (e.salary * td.state_tax / 100) + (e.salary * 0.0765))) + e.Bonus) AS Net_Salary
+    FROM payroll.Employee e
+    JOIN payroll.Department d ON e.dep_id = d.dep_id
+    JOIN payroll.tax_deductions td ON e.State = td.state 
+    JOIN salary_bracket sb ON e.E_id = sb.E_id
+    WHERE e.E_id = %s
+
+here we are trying to have a tax bracket to know the federal tax and combining it with state tax based on state they are working for , 
+
+3)Department Table in  deparment table there can be more than one manager for a deparment right what are your thought on this ? 
+
+4)For payroll table we might not need any tax deduction field and net salary i would like to generate them on fly. 
+
+5) Few doubts on these tables :
+Access Control Table
+This table manages the different roles and access levels within the organization.
+
+Field Name	Data Type	Description
+role_id	INT (PK)	Unique identifier for the role
+role_name	VARCHAR(50)	Name of the role (e.g., HR, Manager, Employee)
+access_level	INT	Numeric value representing access level (e.g., 1 = admin, 2 = manager)
+5. Employee Role Mapping Table
+This table links employees to specific roles for access control purposes.
+
+Field Name	Data Type	Description
+employee_id	INT (FK)	Links to the Employee Table
+role_id	INT (FK)	Links to the Access Control Table
+start_date	DATE	Date the role was assigned to the employee
+end_date	DATE	Date the role ended (if applicable)
+
+Keep in mind that i need to have user_name and password for each employee to access their respective dashboards to do actions on based on their roles.
+Don't mind this access issue as you have given me authentication table that's good to go.
+So do modification to tables according to that also.
+
+6)For this audit table we might have a scenario where more than one field of a emp could have been modified how would you track in that scenario?
+Make changes as per that complex scenarios also.
+
+7) Authentication Table don't you think that there needs to be a link to the employee  table how is the linking happens if an employee wants to 
+change thier passwords.
+
+8) sensitive information  Security Table (for sensitive data) explain with an example between authentication table and sensitive table ,
+
+I am not getting the link and need for this .
+
+
+IMPORTANT NOTE:
+BASED ON ABOVE FEEDBACK AND INFORMATION DO CHANGES TO THE DATABASE SCHEMA GIVEN,
+
+ALSO TRY TO GIVE ME ANSWER FOR QUESITONS THAT I ASKED.
+

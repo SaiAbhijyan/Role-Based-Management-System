@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HR Dashboard</title>
+  <!-- Your custom CSS (if any) -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <script src="{{ url_for('static', filename='js/HR.js') }}" defer></script>
+  <style>
+    /* Sidebar styling (approximately 25% width) */
+    .sidebar {
+      width: 25%;
+      background-color: #f4f4f4;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      padding-top: 20px;
+      border-right: 1px solid #ccc;
+    }
+    .sidebar button {
+      display: block;
+      width: 90%;
+      padding: 10px;
+      margin: 10px auto;
+      border: none;
+      background-color: #008cba;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    .sidebar button:hover {
+      background-color: #005f5f;
+    }
+    /* Main content area (approximately 75% width) */
+    .main-content {
+      margin-left: 25%;
+      padding: 20px;
+    }
+    .header-controls {
+      text-align: right;
+      margin-bottom: 20px;
+    }
+    .header-controls button {
+      margin-left: 10px;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      background-color: #555;
+      color: #fff;
+    }
+    .header-controls button:hover {
+      background-color: #333;
+    }
+    /* Update modal styling */
+    .update-modal {
+      position: fixed;
+      right: 0;
+      top: 0;
+      width: 25%;
+      max-width: 400px;
+      height: 100%;
+      background-color: #fff;
+      border-left: 2px solid #ccc;
+      padding: 20px;
+      box-shadow: -2px 0 5px rgba(0,0,0,0.5);
+      overflow-y: auto;
+      display: none;
+      z-index: 1000;
+    }
+    .update-modal h3 {
+      margin-top: 0;
+    }
+    .update-modal button.close-btn {
+      background-color: #f44336;
+      color: #fff;
+      border: none;
+      padding: 5px 10px;
+      float: right;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    /* Style for the update message */
+    #updateMsg {
+      font-size: 16px;
+      font-weight: bold;
+      color: green;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h3 style="text-align:center;">HR Menu</h3>
+    <button onclick="fetchEmployees()">All Employees</button>
+    <button onclick="showAddEmployeeForm()">Add Employee</button>
+    <button onclick="showUpdateEmployeeFilterForm()">Update Employee</button>
+  </div>
+
+  <!-- Main Content Area -->
+  <div class="main-content" id="contentArea">
+    <div class="header-controls">
+      <button onclick="location.href='/auth/change-password'">Change Password</button>
+      <button onclick="location.href='/auth/logout'">Logout</button>
+    </div>
+    <h2>Welcome to the HR Dashboard</h2>
+    <p>Please select an option from the sidebar.</p>
+  </div>
+
+  <!-- Update Modal -->
+  <div class="update-modal" id="updateModal">
+    <button class="close-btn" onclick="closeUpdateModal()">Close</button>
+    <div id="updateModalContent">
+      <!-- Update form content will be loaded here dynamically -->
+    </div>
+    <div id="updateMsg"></div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,104 @@
+Below is the updated database schema reflecting the changes we've discussed, including the removal of the `access_level` from the Role Table, simplification of the State Tax Table, and adjustment to use role names directly for access control:
+
+### Database Tables and Fields
+
+#### 1. **Employee Information Table**
+Stores personal and professional details of employees.
+
+| Field Name      | Data Type     | Description                                        |
+|-----------------|---------------|----------------------------------------------------|
+| employee_id     | INT (PK)      | Unique identifier for the employee                 |
+| first_name      | VARCHAR(50)   | Employee's first name                              |
+| last_name       | VARCHAR(50)   | Employee's last name                               |
+| date_of_birth   | DATE          | Employee's date of birth                           |
+| hire_date       | DATE          | Employee's hire date                               |
+| department_id   | INT (FK)      | Links to the department the employee belongs to    |
+| job_title       | VARCHAR(100)  | Job title or role of the employee                  |
+| email           | VARCHAR(100)  | Employee's email address                           |
+| phone_number    | VARCHAR(20)   | Employee's phone number                            |
+| address         | VARCHAR(255)  | Employee's address                                 |
+| status          | VARCHAR(20)   | Employment status (e.g., active, on leave, terminated) |
+| manager_id      | INT (FK)      | Employee's manager (references employee_id)        |
+
+#### 2. **Department Table**
+Tracks details about each department.
+
+| Field Name      | Data Type     | Description                                       |
+|-----------------|---------------|---------------------------------------------------|
+| department_id   | INT (PK)      | Unique identifier for the department              |
+| department_name | VARCHAR(100)  | Name of the department                            |
+| manager_id      | INT (FK)      | ID of the department manager (employee_id)        |
+
+#### 3. **Payroll Table**
+Stores payroll-related information for each employee.
+
+| Field Name          | Data Type     | Description                                        |
+|---------------------|---------------|----------------------------------------------------|
+| payroll_id          | INT (PK)      | Unique identifier for the payroll record           |
+| employee_id         | INT (FK)      | Links to the employee in the Employee Table        |
+| salary              | DECIMAL(10,2) | The base salary for the payroll period             |
+| bonus               | DECIMAL(10,2) | Bonus amount for the employee                      |
+| tax_deductions      | DECIMAL(10,2) | Total tax deducted                                 |
+| state_tax_deductions| DECIMAL(10,2) | State-specific tax deductions                      |
+| net_salary          | DECIMAL(10,2) | Net salary after deductions                        |
+| pay_date            | DATE          | Date when the payment was made                     |
+| payroll_frequency   | VARCHAR(20)   | Frequency of payment (e.g., monthly, bi-weekly)    |
+
+#### 4. **State Tax Table**
+Manages different state-level tax rates.
+
+| Field Name      | Data Type     | Description                                 |
+|-----------------|---------------|---------------------------------------------|
+| state_name      | VARCHAR(100) PK | Name of the state (Primary Key)            |
+| tax_percentage  | DECIMAL(5,2)  | Percentage of tax applicable in that state  |
+
+#### 5. **Role Table**
+Manages roles within the organization.
+
+| Field Name      | Data Type         | Description                           |
+|-----------------|-------------------|---------------------------------------|
+| role_id         | INT (PK)          | Unique identifier for the role        |
+| role_name       | VARCHAR(50)       | Name of the role (e.g., HR, Manager, Employee) |
+
+#### 6. **Employee Role Mapping Table**
+Links employees to specific roles for access control purposes.
+
+| Field Name      | Data Type     | Description                                       |
+|-----------------|---------------|---------------------------------------------------|
+| employee_id     | INT (FK)      | Links to the Employee Table                       |
+| role_id         | INT (FK)      | Links to the Role Table                           |
+| start_date      | DATE          | Date the role was assigned to the employee        |
+| end_date        | DATE          | Date the role ended (if applicable)               |
+
+#### 7. **Audit Table**
+Logs changes made to critical employee information.
+
+| Field Name      | Data Type     | Description                                       |
+|-----------------|---------------|---------------------------------------------------|
+| audit_id        | INT (PK)      | Unique identifier for each audit record           |
+| employee_id     | INT (FK)      | Links to the employee whose data was modified     |
+| changed_by      | INT (FK)      | Employee ID of the person who made the change     |
+| change_type     | VARCHAR(50)   | Type of change (e.g., "Salary Update", "Department Change") |
+| change_date     | TIMESTAMP     | Date and time when the change was made            |
+| changes         | JSON          | JSON object storing all changed fields with old and new values |
+
+#### 8. **Authentication Table**
+Manages user authentication details for logging into the system.
+
+| Field Name      | Data Type     | Description                                       |
+|-----------------|---------------|---------------------------------------------------|
+| user_id         | INT (PK)      | Unique identifier for the user                    |
+| username        | VARCHAR(100)  | Username for the user                             |
+| password_hash   | VARCHAR(255)  | Hashed password for the user                      |
+| salt            | VARCHAR(255)  | Salt used in the hashing process                  |
+| email           | VARCHAR(100)  | Email address of the user                         |
+| role_id         | INT (FK)      | Links to the Role Table for role                  |
+
+### Relationships
+
+- **Employee ↔ Department**: `Employee.department_id` references `Department.department_id`. `Department.manager_id` references `Employee.employee_id` for department heads.
+- **Employee ↔ Payroll**: Each `Payroll.employee_id` references `Employee.employee_id`.
+- **Employee ↔ Employee Role Mapping**: `Employee Role Mapping.employee_id` references `Employee.employee_id` and `Employee Role Mapping.role_id` references `Role.role_id`.
+- **Employee ↔ Audit**: `Audit.employee_id` and `Audit.changed_by` reference `Employee.employee_id`.
+- **Authentication ↔ Role**: `Authentication.role_id` references `Role.role_id`.
+

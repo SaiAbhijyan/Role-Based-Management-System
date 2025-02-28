@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+  <!-- Include W3CSS from W3Schools -->
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <!-- Your custom CSS (if any) -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <script src="{{ url_for('static', filename='js/admin.js') }}" defer></script>
+  <style>
+    /* Adjust the layout so the sidebar occupies 25% and the content 75% */
+    .w3-sidebar {
+      width: 25%;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      height: 100%;
+      position: fixed;
+    }
+    .main-content {
+      margin-left: 25%;
+      padding: 20px;
+    }
+    /* Optional: style the buttons inside the sidebar */
+    .w3-bar-item {
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <!-- Sidebar -->
+  <nav class="w3-sidebar w3-bar-block w3-card w3-animate-left w3-theme-d3">
+    <h3 class="w3-bar-item">Admin Menu</h3>
+    <button class="w3-bar-item w3-button w3-hover-blue" onclick="loadSection('employees')">EMPLOYEES</button>
+    <button class="w3-bar-item w3-button w3-hover-blue" onclick="loadSection('users')">USERS</button>
+    <button class="w3-bar-item w3-button w3-hover-blue" onclick="loadSection('roles')">ROLES</button>
+    <button class="w3-bar-item w3-button w3-hover-blue" onclick="location.href='/auth/logout'">Logout</button>
+    <button class="w3-bar-item w3-button w3-hover-blue" onclick="location.href='/auth/change-password'">Change Password</button>
+  </nav>
+
+  <!-- Main content area -->
+  <div class="main-content" id="contentArea">
+    <h3>Welcome, Admin</h3>
+    <p>Select an option from the menu.</p>
+  </div>
+</body>
+</html>

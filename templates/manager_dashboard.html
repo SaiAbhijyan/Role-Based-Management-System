@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manager Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="{{ url_for('static', filename='js/manager.js') }}" defer></script>
+    
+</head>
+<body onload="loadFilters()">
+    <div class="container">
+        <h2>Manager Dashboard</h2>
+            <div>
+                <button onclick="location.href='/auth/change-password'">Change Password</button>
+                <button onclick="location.href='/auth/logout'">Logout</button>
+            </div>
+        <label>Filter by Department:</label>
+        <select id="department">
+            <option value="">Select Department</option>
+        </select>
+        <label>Filter by State:</label>
+        <select id="state">
+            <option value="">Select State</option>
+        </select>
+        <label>Search Employee Name:</label>
+        <input type="text" id="search_name" placeholder="Enter name">
+
+        <button onclick="fetchEmployees()">Filter</button>
+        <button onclick="resetFilters()">Reset Filters</button>
+
+        <table id="employeeTable">
+            <thead>
+                <tr>
+                    <th onclick="sortTable(0)">Employee ID</th>
+                    <th onclick="sortTable(1)">Name</th>
+                    <th onclick="sortTable(2)">Designation</th>
+                    <th onclick="sortTable(3)">Department</th>
+                    <th onclick="sortTable(4)">Department ID</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Employee data will be inserted here -->
+            </tbody>
+        </table>
+    </div>
+    
+    
+</body>
+</html>

@@ -1,0 +1,12 @@
+"e_id","e_name","designation","salary","bonus","state","zip_code","dep_id"
+10035,"Michael Johnson","System Administrator","120000","5000","California","90007",5
+10036,"Sarah Thompson","IT Manager","90000","3000","Texas","73306",1
+10037,"Robert Davis","Finance Manager","95000","3200","Illinois","60605",2
+10038,"Emily White","Operations Manager","88000","2800","New York","10006",3
+10039,"David Lee","Software Engineer","75000","2000","New York","10006",4
+10040,"Sophia Miller","Network Engineer","72000","1800","California","90008",1
+10041,"John Carter","Database Administrator","87000","2900","Washington","98104",1
+10042,"Olivia Wilson","Finance Analyst","78000","2200","Illinois","60606",2
+10043,"James Harris","Security Analyst","85000","2600","Texas","73307",1
+10044,"Ava Moore","Software Developer","81000","2500","Florida","33107",4
+10045,"MedRCM_HR","Hiring Manager","90000","8000","New Jersey","8648",3
